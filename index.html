@@ -2417,7 +2417,7 @@ function openCourse(name,skill){
     }else if(course){
         iframe.style.display="block";
         fallback.style.display="none";
-        iframe.src="https://www.youtube-nocookie.com/embed/"+course.videoId+"?rel=0&modestbranding=1";
+        iframe.src="https://www.youtube.com/embed/"+course.videoId+"?rel=0&modestbranding=1&playsinline=1&origin="+encodeURIComponent(location.origin);
     }else{
         iframe.style.display="none";
         fallback.style.display="flex";
