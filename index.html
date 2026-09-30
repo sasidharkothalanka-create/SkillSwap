@@ -1,295 +1,163 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SkillSwap - Skill Exchange Platform</title>
+<title>SkillSwap - Student Skill Exchange</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-    --bg:#f6f7fb;
-    --card:#fff;
-    --text:#172033;
-    --muted:#70798b;
-    --line:#e7e9f0;
-    --primary:#635bff;
-    --primary-dark:#5148e8;
-    --green:#18a66a;
-    --red:#ef4444;
-    --shadow:0 12px 35px rgba(29,35,58,.08);
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--text);
+    background:#f4f7fb;
+    color:#18212f;
 }
-
-button,input,textarea,select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-    border:0;
-}
-
-body:not(.authenticated) .app{
-    display:none;
-}
-
-/* LOGIN */
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
 
 .auth-screen{
-    position:fixed;
-    inset:0;
-    z-index:500;
+    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
     padding:20px;
-    background:
-    radial-gradient(circle at 10% 10%,#ddd9ff,transparent 30%),
-    radial-gradient(circle at 90% 90%,#e6e1ff,transparent 30%),
-    #f7f7fc;
-    overflow:auto;
 }
 
-.auth-card{
+.auth-box{
     width:100%;
     max-width:430px;
-    background:#fff;
+    background:white;
     padding:35px;
-    border-radius:24px;
-    box-shadow:0 25px 80px rgba(45,40,100,.15);
+    border-radius:22px;
+    box-shadow:0 25px 60px #0004;
 }
 
-.auth-logo{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-    margin-bottom:30px;
-}
-
-.auth-logo h2{
-    font-size:25px;
-}
-
-.auth-logo h2 span{
-    color:var(--primary);
-}
-
-.logo-icon{
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    background:linear-gradient(135deg,#756cff,#4f46e5);
-    color:#fff;
-    display:grid;
-    place-items:center;
-    font-weight:800;
-}
-
-.auth-card h1{
+.logo{
     font-size:27px;
-    margin-bottom:7px;
+    font-weight:bold;
+    color:#4f46e5;
 }
 
-.auth-subtitle{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-    margin-bottom:20px;
+.auth-box h1{
+    margin:15px 0 8px;
 }
 
-.auth-card label{
+.auth-box p{
+    color:#697386;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
     display:block;
-    font-size:12px;
-    font-weight:700;
-    margin:15px 0 7px;
+    margin-bottom:7px;
+    font-weight:bold;
+    font-size:14px;
 }
 
-.auth-card input{
+.form-group input,
+.form-group select,
+.form-group textarea{
     width:100%;
-    padding:13px;
-    border:1px solid var(--line);
+    padding:12px;
+    border:1px solid #d9deea;
     border-radius:10px;
     outline:none;
-    background:#fafbfc;
 }
 
-.auth-card input:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 3px rgba(99,91,255,.1);
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#4f46e5;
 }
 
-.password-box{
-    position:relative;
-}
-
-.password-box input{
-    padding-right:65px;
-}
-
-.password-box button{
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    background:transparent;
-    color:var(--primary);
-    font-size:12px;
-    font-weight:700;
-}
-
-.auth-submit{
+.primary-btn{
+    background:#4f46e5;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
     width:100%;
-    margin-top:23px;
-    padding:14px;
+    font-weight:bold;
+}
+
+.secondary-btn{
+    background:#eef2ff;
+    color:#4f46e5;
+    padding:10px 15px;
+    border-radius:9px;
+    font-weight:bold;
 }
 
 .auth-switch{
     text-align:center;
-    margin-top:20px;
-    color:var(--muted);
-    font-size:13px;
+    margin-top:18px;
+    color:#697386;
 }
 
-.auth-switch a{
-    color:var(--primary);
-    font-weight:700;
-    text-decoration:none;
+.auth-switch span{
+    color:#4f46e5;
+    font-weight:bold;
+    cursor:pointer;
 }
-
-.auth-note{
-    text-align:center;
-    color:var(--muted);
-    font-size:11px;
-    margin-top:25px;
-}
-
-/* APP */
 
 .app{
+    display:none;
     min-height:100vh;
+}
+
+body.authenticated .auth-screen{
+    display:none;
+}
+
+body.authenticated .app{
     display:flex;
 }
 
 .sidebar{
     width:250px;
-    background:#fff;
-    border-right:1px solid var(--line);
-    padding:24px 16px;
+    background:#111827;
+    color:white;
     position:fixed;
+    left:0;
     top:0;
     bottom:0;
-    left:0;
-    z-index:20;
+    padding:25px 15px;
+    z-index:10;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:21px;
-    font-weight:800;
-    padding:4px 10px 30px;
+.sidebar .logo{
+    color:white;
+    padding:0 12px 30px;
 }
 
-.logo span{
-    color:var(--primary);
+.nav-item{
+    padding:13px 15px;
+    margin:5px 0;
+    border-radius:10px;
+    color:#cbd5e1;
+    cursor:pointer;
 }
 
-.nav{
-    display:grid;
-    gap:6px;
+.nav-item:hover,
+.nav-item.active{
+    background:#4f46e5;
+    color:white;
 }
 
-.nav button{
-    width:100%;
-    padding:12px 14px;
-    border-radius:12px;
-    background:transparent;
-    color:#687184;
-    display:flex;
-    align-items:center;
-    gap:13px;
-    font-weight:600;
-    text-align:left;
-}
-
-.nav button:hover,
-.nav button.active{
-    background:#efeeff;
-    color:var(--primary);
-}
-
-.nav-icon{
-    width:22px;
-    text-align:center;
-}
-
-.sidebar-bottom{
+.logout{
     position:absolute;
-    bottom:20px;
-    left:16px;
-    right:16px;
+    bottom:25px;
+    left:15px;
+    right:15px;
+    background:#ef4444;
+    color:white;
+    padding:12px;
+    border-radius:10px;
 }
-
-.coin-mini{
-    background:#f3f1ff;
-    border:1px solid #e2dfff;
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:12px;
-}
-
-.coin-mini small{
-    display:block;
-    color:var(--muted);
-}
-
-.coin-mini strong{
-    font-size:22px;
-}
-
-.profile-mini{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    padding:10px;
-}
-
-.avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    display:grid;
-    place-items:center;
-    background:linear-gradient(135deg,#ffcf91,#ff9f68);
-    color:#fff;
-    font-weight:800;
-}
-
-.profile-mini strong{
-    display:block;
-    font-size:13px;
-}
-
-.profile-mini span{
-    font-size:11px;
-    color:var(--muted);
-}
-
-/* MAIN */
 
 .main{
     margin-left:250px;
@@ -297,69 +165,42 @@ body:not(.authenticated) .app{
 }
 
 .topbar{
-    height:76px;
-    background:#fff;
-    border-bottom:1px solid var(--line);
+    height:75px;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 30px;
-    position:sticky;
-    top:0;
-    z-index:10;
 }
 
 .search{
-    width:min(440px,45vw);
-    position:relative;
+    width:330px;
+    padding:11px 15px;
+    border:1px solid #dbe1ea;
+    border-radius:10px;
 }
 
-.search input{
-    width:100%;
-    padding:12px 16px 12px 42px;
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:#f8f9fc;
-    outline:none;
-}
-
-.search-icon{
-    position:absolute;
-    left:15px;
-    top:11px;
-    color:#9299a8;
-}
-
-.top-actions{
+.student-mini{
     display:flex;
     align-items:center;
     gap:10px;
 }
 
-.icon-btn{
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    background:#f4f5f8;
-    color:#667085;
-}
-
-.primary{
-    background:var(--primary);
-    color:#fff;
-    padding:11px 17px;
-    border-radius:10px;
-    font-weight:700;
-}
-
-.primary:hover{
-    background:var(--primary-dark);
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#4f46e5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
 .content{
     padding:30px;
-    max-width:1500px;
-    margin:auto;
 }
 
 .page{
@@ -370,2769 +211,1010 @@ body:not(.authenticated) .app{
     display:block;
 }
 
-/* HERO */
-
-.hero{
-    background:linear-gradient(135deg,#635bff,#8278ff,#a39cff);
-    color:#fff;
-    border-radius:24px;
-    padding:30px;
-    min-height:220px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.page-title{
+    margin-bottom:25px;
 }
 
-.hero h1{
-    font-size:32px;
-    margin-bottom:10px;
+.page-title h1{
+    font-size:28px;
+    margin-bottom:6px;
 }
 
-.hero p{
-    max-width:650px;
-    color:#e8e6ff;
-    line-height:1.6;
+.page-title p{
+    color:#6b7280;
 }
-
-.hero-actions{
-    display:flex;
-    gap:10px;
-    margin-top:22px;
-}
-
-.light-btn{
-    background:#fff;
-    color:var(--primary);
-    padding:11px 17px;
-    border-radius:10px;
-    font-weight:700;
-}
-
-.ghost-light{
-    background:rgba(255,255,255,.15);
-    color:#fff;
-    border:1px solid rgba(255,255,255,.3);
-    padding:11px 17px;
-    border-radius:10px;
-}
-
-.hero-art{
-    font-size:90px;
-    margin-right:45px;
-}
-
-/* STATS */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin:22px 0;
+    gap:18px;
+    margin-bottom:25px;
 }
 
-.stat{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:17px;
-    padding:18px;
+.stat-card{
+    background:white;
+    padding:22px;
+    border-radius:15px;
+    border:1px solid #e7eaf0;
 }
 
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    color:var(--muted);
-    font-size:13px;
+.stat-card h3{
+    font-size:28px;
+    margin:10px 0;
 }
 
-.stat-icon{
-    width:38px;
-    height:38px;
-    border-radius:11px;
-    background:#f0efff;
+.stat-card p{
+    color:#6b7280;
+}
+
+.grid{
     display:grid;
-    place-items:center;
-}
-
-.stat strong{
-    display:block;
-    font-size:25px;
-    margin-top:12px;
-}
-
-.stat small{
-    color:var(--green);
-    font-weight:700;
-}
-
-/* CARDS */
-
-.grid2{
-    display:grid;
-    grid-template-columns:1.35fr .85fr;
+    grid-template-columns:repeat(3,1fr);
     gap:20px;
 }
 
 .card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:18px;
+    background:white;
+    border:1px solid #e7eaf0;
+    border-radius:15px;
     padding:20px;
 }
 
-.card-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:17px;
+.card h3{
+    margin-bottom:10px;
 }
 
-.card-head h2{
-    font-size:17px;
-}
-
-.card-head button{
-    background:none;
-    color:var(--primary);
-    font-weight:700;
-}
-
-/* MATCH */
-
-.match{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    padding:14px 0;
-    border-bottom:1px solid var(--line);
-}
-
-.match:last-child{
-    border-bottom:0;
-}
-
-.match-info{
-    flex:1;
-}
-
-.match-info strong{
-    display:block;
-    font-size:14px;
-}
-
-.match-info span{
-    display:block;
-    color:var(--muted);
-    font-size:12px;
-    margin-top:3px;
-}
-
-.match-percent{
-    color:var(--green);
-    font-size:13px;
-    font-weight:800;
-}
-
-.small-btn{
-    padding:8px 11px;
-    border-radius:9px;
-    background:#efeeff;
-    color:var(--primary);
-    font-size:12px;
-    font-weight:700;
-}
-
-/* SESSION */
-
-.session{
-    display:flex;
-    gap:12px;
-    padding:13px 0;
-    border-bottom:1px solid var(--line);
-}
-
-.session:last-child{
-    border:0;
-}
-
-.date-box{
-    width:48px;
-    height:52px;
-    background:#f0efff;
-    color:var(--primary);
-    border-radius:12px;
-    display:grid;
-    place-items:center;
-    text-align:center;
-    font-weight:800;
-    font-size:12px;
-}
-
-.session strong{
-    font-size:13px;
-}
-
-.session p{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:4px;
-}
-
-/* SKILLS */
-
-.section-title{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin:28px 0 15px;
-}
-
-.section-title h2{
-    font-size:21px;
-}
-
-.skill-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:17px;
-}
-
-.skill-card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:17px;
-    padding:19px;
-    transition:.2s;
-}
-
-.skill-card:hover{
-    transform:translateY(-3px);
-    box-shadow:var(--shadow);
-}
-
-.skill-top{
-    display:flex;
-    justify-content:space-between;
-}
-
-.skill-avatar{
-    width:46px;
-    height:46px;
-    border-radius:14px;
-    background:#f0efff;
-    display:grid;
-    place-items:center;
-    font-size:21px;
-}
-
-.level{
-    font-size:10px;
-    padding:5px 8px;
-    border-radius:20px;
-    background:#ecfdf3;
-    color:#16804f;
-    font-weight:800;
-}
-
-.skill-card h3{
-    font-size:15px;
-    margin:15px 0 5px;
-}
-
-.skill-card p{
-    font-size:12px;
-    color:var(--muted);
+.card p{
+    color:#6b7280;
     line-height:1.5;
 }
 
-.tags{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin:13px 0;
-}
-
-.tag{
-    font-size:10px;
-    background:#f5f6f9;
-    color:#687184;
-    padding:5px 8px;
-    border-radius:7px;
-}
-
-.skill-footer{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    border-top:1px solid var(--line);
-    padding-top:13px;
-}
-
-.skill-user{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    font-size:11px;
-    font-weight:700;
-}
-
-.skill-user .avatar{
-    width:27px;
-    height:27px;
-    font-size:10px;
-}
-
-/* PAGE */
-
-.page-header{
-    margin-bottom:23px;
-}
-
-.page-header h1{
-    font-size:28px;
-    margin-bottom:7px;
-}
-
-.page-header p{
-    color:var(--muted);
-}
-
-/* FILTER */
-
-.filters{
-    display:flex;
-    flex-wrap:wrap;
-    gap:9px;
-}
-
-.filter{
-    padding:8px 13px;
-    border:1px solid var(--line);
-    background:#fff;
+.skill-tag{
+    display:inline-block;
+    background:#eef2ff;
+    color:#4f46e5;
+    padding:6px 10px;
     border-radius:20px;
-    color:#6b7280;
-    font-weight:600;
     font-size:12px;
+    margin:4px;
 }
 
-.filter.active{
-    background:#efeeff;
-    color:var(--primary);
+.match-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
-/* PROFILE */
-
-.profile-grid{
-    display:grid;
-    grid-template-columns:300px 1fr;
-    gap:20px;
+.match-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#ddd6fe;
+    color:#4f46e5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
-.profile-card{
-    text-align:center;
+.action-btn{
+    background:#4f46e5;
+    color:white;
+    padding:8px 13px;
+    border-radius:8px;
+    margin-top:12px;
 }
 
-.profile-card>.avatar{
-    width:90px;
-    height:90px;
-    margin:5px auto 14px;
-    font-size:27px;
-}
-
-.profile-card h2{
-    font-size:20px;
-}
-
-.profile-card p{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:5px;
-}
-
-.progress{
-    height:8px;
-    background:#eef0f4;
-    border-radius:20px;
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:15px;
     overflow:hidden;
 }
 
-.progress span{
-    height:100%;
-    display:block;
-    background:linear-gradient(90deg,#635bff,#8c84ff);
+.table th,
+.table td{
+    padding:15px;
+    border-bottom:1px solid #edf0f4;
+    text-align:left;
 }
 
-.form-grid{
+.table th{
+    background:#f8fafc;
+}
+
+.profile-container{
+    max-width:850px;
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:28px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:28px;
+    padding-bottom:20px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.big-avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#4f46e5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.profile-header h2{
+    margin-bottom:5px;
+}
+
+.profile-header p{
+    color:#6b7280;
+}
+
+.profile-form{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:16px;
-}
-
-.field label{
-    display:block;
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:7px;
-}
-
-.field input,
-.field textarea,
-.field select{
-    width:100%;
-    padding:11px 12px;
-    border:1px solid var(--line);
-    border-radius:10px;
-    outline:none;
-    background:#fafbfc;
-}
-
-.field textarea{
-    min-height:100px;
-    resize:vertical;
+    gap:18px;
 }
 
 .full{
     grid-column:1/-1;
 }
 
-/* CHAT */
-
-.chat-layout{
-    display:grid;
-    grid-template-columns:280px 1fr;
-    min-height:600px;
+.profile-form label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
 }
 
-.chat-list{
-    border-right:1px solid var(--line);
-    padding-right:16px;
-}
-
-.chat-item{
-    display:flex;
-    gap:10px;
+.profile-form input,
+.profile-form select,
+.profile-form textarea{
+    width:100%;
     padding:12px;
-    border-radius:12px;
-    margin-bottom:5px;
-}
-
-.chat-item.active{
-    background:#f0efff;
-}
-
-.chat-item div:nth-child(2){
-    flex:1;
-}
-
-.chat-item strong{
-    font-size:13px;
-}
-
-.chat-item p{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:3px;
-}
-
-.chat-window{
-    display:flex;
-    flex-direction:column;
-    padding-left:20px;
-}
-
-.chat-head{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding-bottom:15px;
-    border-bottom:1px solid var(--line);
-}
-
-.messages{
-    flex:1;
-    padding:20px 0;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.msg{
-    max-width:65%;
-    padding:11px 13px;
-    background:#f1f3f7;
-    border-radius:14px;
-    font-size:13px;
-}
-
-.msg.me{
-    align-self:flex-end;
-    background:var(--primary);
-    color:white;
-}
-
-.chat-input{
-    display:flex;
-    gap:8px;
-}
-
-.chat-input input{
-    flex:1;
-    padding:12px;
-    border:1px solid var(--line);
-    border-radius:11px;
+    border:1px solid #d8dee8;
+    border-radius:10px;
     outline:none;
 }
 
-/* TABLE */
-
-.table-wrap{
-    overflow:auto;
+.profile-form textarea{
+    min-height:110px;
+    resize:vertical;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,
-td{
-    padding:14px;
-    text-align:left;
-    border-bottom:1px solid var(--line);
-    font-size:13px;
-}
-
-th{
-    color:var(--muted);
-    font-size:11px;
-    text-transform:uppercase;
-}
-
-/* MODAL */
-
-.modal-bg{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(13,18,32,.45);
-    z-index:400;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-}
-
-.modal-bg.show{
-    display:flex;
+.save-profile{
+    background:#4f46e5;
+    color:white;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:bold;
 }
 
 .modal{
-    width:min(500px,100%);
-    background:white;
-    border-radius:18px;
-    padding:23px;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:30;
+    padding:20px;
 }
 
-.modal-head{
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:500px;
+    padding:25px;
+    border-radius:18px;
+}
+
+.modal-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:18px;
+    margin-bottom:20px;
 }
 
 .close{
-    width:34px;
-    height:34px;
-    background:#f3f4f6;
-    border-radius:9px;
+    background:#f1f5f9;
+    width:35px;
+    height:35px;
+    border-radius:50%;
 }
-
-.modal-actions{
-    display:flex;
-    justify-content:flex-end;
-    gap:8px;
-    margin-top:17px;
-}
-
-.cancel{
-    background:#f2f3f6;
-    padding:10px 15px;
-    border-radius:10px;
-    font-weight:700;
-}
-
-/* TOAST */
 
 .toast{
     position:fixed;
     right:25px;
     bottom:25px;
-    background:#172033;
+    background:#111827;
     color:white;
-    padding:13px 17px;
-    border-radius:12px;
-    z-index:1000;
-    opacity:0;
-    transform:translateY(100px);
-    transition:.3s;
+    padding:14px 18px;
+    border-radius:10px;
+    display:none;
+    z-index:100;
 }
 
 .toast.show{
-    opacity:1;
-    transform:translateY(0);
+    display:block;
 }
 
-/* RESPONSIVE */
+@media(max-width:900px){
+    .sidebar{
+        width:210px;
+    }
 
-@media(max-width:1050px){
+    .main{
+        margin-left:210px;
+        width:calc(100% - 210px);
+    }
 
-.sidebar{
-    width:78px;
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
 }
 
-.logo{
-    justify-content:center;
-}
+@media(max-width:700px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
 
-.logo-text,
-.nav button span:not(.nav-icon),
-.sidebar-bottom{
-    display:none;
-}
+    .sidebar .logo{
+        padding-bottom:15px;
+    }
 
-.nav button{
-    justify-content:center;
-}
+    .logout{
+        position:relative;
+        left:auto;
+        right:auto;
+        bottom:auto;
+        margin-top:10px;
+    }
 
-.main{
-    margin-left:78px;
-    width:calc(100% - 78px);
-}
+    .main{
+        margin-left:0;
+        width:100%;
+    }
 
-.skill-grid{
-    grid-template-columns:repeat(2,1fr);
-}
+    body.authenticated .app{
+        display:block;
+    }
 
-.stats{
-    grid-template-columns:repeat(2,1fr);
-}
+    .topbar{
+        padding:15px;
+        height:auto;
+        gap:10px;
+        flex-direction:column;
+        align-items:stretch;
+    }
 
-}
+    .search{
+        width:100%;
+    }
 
-@media(max-width:760px){
+    .content{
+        padding:18px;
+    }
 
-.sidebar{
-    display:none;
-}
+    .stats,
+    .grid{
+        grid-template-columns:1fr;
+    }
 
-.main{
-    margin-left:0;
-    width:100%;
-}
+    .profile-form{
+        grid-template-columns:1fr;
+    }
 
-.topbar{
-    padding:0 15px;
-}
-
-.search{
-    width:65vw;
-}
-
-.top-actions .primary{
-    display:none;
-}
-
-.content{
-    padding:18px;
-}
-
-.hero{
-    padding:24px;
-}
-
-.hero-art{
-    display:none;
-}
-
-.hero h1{
-    font-size:25px;
-}
-
-.grid2,
-.profile-grid{
-    grid-template-columns:1fr;
-}
-
-.skill-grid{
-    grid-template-columns:1fr;
-}
-
-.stats{
-    grid-template-columns:1fr 1fr;
-}
-
-.form-grid{
-    grid-template-columns:1fr;
-}
-
-.chat-layout{
-    grid-template-columns:1fr;
-}
-
-.chat-list{
-    border-right:0;
-    border-bottom:1px solid var(--line);
-    padding-bottom:12px;
-    display:flex;
-    overflow:auto;
-}
-
-.chat-item{
-    min-width:180px;
-}
-
-.chat-window{
-    padding:20px 0 0;
-}
-
-.auth-card{
-    padding:25px 20px;
-}
-
+    .full{
+        grid-column:auto;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN / REGISTER -->
+<div class="auth-screen">
+    <div class="auth-box">
+        <div class="logo">SkillSwap</div>
 
-<div class="auth-screen" id="authScreen">
+        <div id="loginForm">
+            <h1>Welcome Back</h1>
+            <p>Login to continue to your student dashboard.</p>
 
-<div class="auth-card">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="student@example.com">
+            </div>
 
-<div class="auth-logo">
-<div class="logo-icon">S</div>
-<h2>Skill<span>Swap</span></h2>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password">
+            </div>
+
+            <button class="primary-btn" onclick="login()">Login</button>
+
+            <div class="auth-switch">
+                Don't have an account?
+                <span onclick="showRegister()">Create Account</span>
+            </div>
+        </div>
+
+        <div id="registerForm" style="display:none">
+            <h1>Create Account</h1>
+            <p>Create your SkillSwap student account.</p>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="registerName" placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="registerEmail" placeholder="student@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="registerPassword" placeholder="Create password">
+            </div>
+
+            <button class="primary-btn" onclick="register()">Create Account</button>
+
+            <div class="auth-switch">
+                Already have an account?
+                <span onclick="showLogin()">Login</span>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<!-- LOGIN -->
-
-<div id="loginForm">
-
-<h1>Welcome back!</h1>
-
-<p class="auth-subtitle">
-Login to continue your learning journey.
-</p>
-
-<form onsubmit="loginUser(event)">
-
-<label>Email Address</label>
-
-<input
-type="email"
-id="loginEmail"
-placeholder="Enter your email"
-required
->
-
-<label>Password</label>
-
-<div class="password-box">
-
-<input
-type="password"
-id="loginPassword"
-placeholder="Enter your password"
-minlength="8"
-required
->
-
-<button
-type="button"
-onclick="togglePassword('loginPassword',this)"
->
-Show
-</button>
-
-</div>
-
-<button class="primary auth-submit">
-Login
-</button>
-
-</form>
-
-<p class="auth-switch">
-
-Don't have an account?
-
-<a href="#" onclick="showRegister(event)">
-Create account
-</a>
-
-</p>
-
-</div>
-
-
-<!-- REGISTER -->
-
-<div id="registerForm" style="display:none">
-
-<h1>Create account</h1>
-
-<p class="auth-subtitle">
-Join the SkillSwap community.
-</p>
-
-<form onsubmit="registerUser(event)">
-
-<label>Full Name</label>
-
-<input
-type="text"
-id="registerName"
-placeholder="Your name"
-maxlength="60"
-required
->
-
-<label>Email Address</label>
-
-<input
-type="email"
-id="registerEmail"
-placeholder="Enter your email"
-required
->
-
-<label>Password</label>
-
-<div class="password-box">
-
-<input
-type="password"
-id="registerPassword"
-placeholder="At least 8 characters"
-minlength="8"
-required
->
-
-<button
-type="button"
-onclick="togglePassword('registerPassword',this)"
->
-Show
-</button>
-
-</div>
-
-<button class="primary auth-submit">
-Create Account
-</button>
-
-</form>
-
-<p class="auth-switch">
-
-Already have an account?
-
-<a href="#" onclick="showLogin(event)">
-Login
-</a>
-
-</p>
-
-</div>
-
-<p class="auth-note">
-Your learning journey starts here ✨
-</p>
-
-</div>
-
-</div>
-
-
-<!-- APPLICATION -->
 
 <div class="app">
 
-<aside class="sidebar">
-
-<div class="logo">
-
-<div class="logo-icon">
-S
-</div>
-
-<div class="logo-text">
-Skill<span>Swap</span>
-</div>
-
-</div>
-
-
-<nav class="nav">
-
-<button class="active" data-page="dashboard">
-<span class="nav-icon">⌂</span>
-<span>Dashboard</span>
-</button>
-
-<button data-page="discover">
-<span class="nav-icon">⌕</span>
-<span>Discover Skills</span>
-</button>
-
-<button data-page="matches">
-<span class="nav-icon">♧</span>
-<span>My Matches</span>
-</button>
-
-<button data-page="sessions">
-<span class="nav-icon">◷</span>
-<span>Sessions</span>
-</button>
-
-<button data-page="messages">
-<span class="nav-icon">▣</span>
-<span>Messages</span>
-</button>
-
-<button data-page="leaderboard">
-<span class="nav-icon">♛</span>
-<span>Leaderboard</span>
-</button>
-
-<button data-page="profile">
-<span class="nav-icon">◉</span>
-<span>My Profile</span>
-</button>
-
-</nav>
-
-
-<div class="sidebar-bottom">
-
-<div class="coin-mini">
-
-<small>SkillCoins</small>
-
-<strong id="sideCoins">
-245 🪙
-</strong>
-
-</div>
-
-
-<div class="profile-mini">
-
-<div class="avatar">
-AS
-</div>
-
-<div>
-<strong>Alex Student</strong>
-<span>Student</span>
-</div>
-
-</div>
-
-</div>
-
-</aside>
-
-
-<main class="main">
-
-<header class="topbar">
-
-<div class="search">
-
-<span class="search-icon">
-⌕
-</span>
-
-<input
-id="globalSearch"
-placeholder="Search skills, people, projects..."
-oninput="globalSearch()"
->
-
-</div>
-
-
-<div class="top-actions">
-
-<button
-class="icon-btn"
-onclick="showToast('You have 3 new notifications')"
->
-🔔
-</button>
-
-<button
-class="primary"
-onclick="openModal()"
->
-+ Offer a Skill
-</button>
-
-<button
-class="icon-btn"
-onclick="logoutUser()"
-title="Logout"
->
-↪
-</button>
-
-</div>
-
-</header>
-
-
-<section class="content">
-
-
-<!-- DASHBOARD -->
-
-<div id="dashboard" class="page active">
-
-<div class="hero">
-
-<div>
-
-<h1>
-Learn something. Teach something.
-</h1>
-
-<p>
-Exchange skills with students around you.
-Build your network, earn SkillCoins, and grow together.
-</p>
-
-<div class="hero-actions">
-
-<button
-class="light-btn"
-onclick="go('discover')"
->
-Find a Skill
-</button>
-
-<button
-class="ghost-light"
-onclick="openModal()"
->
-Offer a Skill
-</button>
-
-</div>
-
-</div>
-
-<div class="hero-art">
-🤝
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-
-<div class="stat-top">
-SkillCoins
-<span class="stat-icon">🪙</span>
-</div>
-
-<strong id="coinStat">
-245
-</strong>
-
-<small>
-+35 this week
-</small>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-top">
-Skills Learned
-<span class="stat-icon">📚</span>
-</div>
-
-<strong>
-12
-</strong>
-
-<small>
-+3 this month
-</small>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-top">
-Skills Taught
-<span class="stat-icon">🎓</span>
-</div>
-
-<strong>
-8
-</strong>
-
-<small>
-+2 this month
-</small>
-
-</div>
-
-
-<div class="stat">
-
-<div class="stat-top">
-Reputation
-<span class="stat-icon">⭐</span>
-</div>
-
-<strong>
-4.9
-</strong>
-
-<small>
-Top 8%
-</small>
-
-</div>
-
-</div>
-
-
-<div class="grid2">
-
-
-<div class="card">
-
-<div class="card-head">
-
-<h2>
-Recommended Matches
-</h2>
-
-<button onclick="go('matches')">
-View all
-</button>
-
-</div>
-
-<div id="dashMatches"></div>
-
-</div>
-
-
-<div class="card">
-
-<div class="card-head">
-
-<h2>
-Upcoming Sessions
-</h2>
-
-<button onclick="go('sessions')">
-View all
-</button>
-
-</div>
-
-
-<div class="session">
-
-<div class="date-box">
-OCT<br>02
-</div>
-
-<div>
-<strong>React Basics</strong>
-<p>with Priya • 6:00 PM</p>
-</div>
-
-</div>
-
-
-<div class="session">
-
-<div class="date-box">
-OCT<br>04
-</div>
-
-<div>
-<strong>UI/UX Design</strong>
-<p>with Rahul • 5:30 PM</p>
-</div>
-
-</div>
-
-
-<div class="session">
-
-<div class="date-box">
-OCT<br>06
-</div>
-
-<div>
-<strong>Python Practice</strong>
-<p>with Neha • 7:00 PM</p>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section-title">
-
-<h2>
-Popular Skills
-</h2>
-
-<button
-class="filter active"
-onclick="go('discover')"
->
-Explore all →
-</button>
-
-</div>
-
-
-<div
-class="skill-grid"
-id="popularSkills"
-></div>
-
-</div>
-
-
-<!-- DISCOVER -->
-
-<div id="discover" class="page">
-
-<div class="page-header">
-
-<h1>
-Discover Skills
-</h1>
-
-<p>
-Find students who can teach what you want to learn.
-</p>
-
-</div>
-
-
-<div
-class="card"
-style="margin-bottom:20px"
->
-
-<div
-class="filters"
-id="filters"
->
-
-<button
-class="filter active"
-data-filter="All"
->
-All
-</button>
-
-<button
-class="filter"
-data-filter="Programming"
->
-Programming
-</button>
-
-<button
-class="filter"
-data-filter="Design"
->
-Design
-</button>
-
-<button
-class="filter"
-data-filter="Data"
->
-Data
-</button>
-
-<button
-class="filter"
-data-filter="Business"
->
-Business
-</button>
-
-<button
-class="filter"
-data-filter="Creative"
->
-Creative
-</button>
-
-</div>
-
-</div>
-
-
-<div
-class="skill-grid"
-id="discoverGrid"
-></div>
-
-</div>
-
-
-<!-- MATCHES -->
-
-<div id="matches" class="page">
-
-<div class="page-header">
-
-<h1>
-My Matches
-</h1>
-
-<p>
-People whose skills complement yours.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div id="matchList"></div>
-
-</div>
-
-</div>
-
-
-<!-- SESSIONS -->
-
-<div id="sessions" class="page">
-
-<div class="page-header">
-
-<h1>
-Sessions
-</h1>
-
-<p>
-Manage your skill exchange sessions.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="card-head">
-
-<h2>
-Upcoming Sessions
-</h2>
-
-<button onclick="showToast('Session scheduler opened')">
-+ Schedule
-</button>
-
-</div>
-
-<div id="sessionList"></div>
-
-</div>
-
-</div>
-
-
-<!-- MESSAGES -->
-
-<div id="messages" class="page">
-
-<div class="page-header">
-
-<h1>
-Messages
-</h1>
-
-<p>
-Connect with your learning partners.
-</p>
-
-</div>
-
-
-<div class="card chat-layout">
-
-<div class="chat-list">
-
-<div
-class="chat-item active"
-onclick="selectChat('Priya')"
->
-
-<div class="avatar">
-PR
-</div>
-
-<div>
-
-<strong>
-Priya
-</strong>
-
-<p>
-See you tomorrow!
-</p>
-
-</div>
-
-</div>
-
-
-<div
-class="chat-item"
-onclick="selectChat('Rahul')"
->
-
-<div class="avatar">
-RK
-</div>
-
-<div>
-
-<strong>
-Rahul
-</strong>
-
-<p>
-Can you share the Figma file?
-</p>
-
-</div>
-
-</div>
-
-
-<div
-class="chat-item"
-onclick="selectChat('Neha')"
->
-
-<div class="avatar">
-NS
-</div>
-
-<div>
-
-<strong>
-Neha
-</strong>
-
-<p>
-Let's practice Python.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="chat-window">
-
-<div class="chat-head">
-
-<div class="avatar">
-PR
-</div>
-
-<div>
-
-<strong id="chatName">
-Priya
-</strong>
-
-<p style="font-size:11px;color:var(--muted)">
-Online
-</p>
-
-</div>
-
-</div>
-
-
-<div
-class="messages"
-id="messages"
->
-
-<div class="msg">
-Hey! I saw you're looking to learn React.
-</div>
-
-<div class="msg me">
-Yes! I can teach you SQL in exchange.
-</div>
-
-<div class="msg">
-Perfect. Let's do our first session tomorrow. 😊
-</div>
-
-</div>
-
-
-<div class="chat-input">
-
-<input
-id="chatInput"
-placeholder="Type a message..."
-onkeydown="if(event.key==='Enter')sendMessage()"
->
-
-<button
-class="primary"
-onclick="sendMessage()"
->
-Send
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- LEADERBOARD -->
-
-<div id="leaderboard" class="page">
-
-<div class="page-header">
-
-<h1>
-Leaderboard
-</h1>
-
-<p>
-Top contributors in the SkillSwap community.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<div class="card-head">
-
-<h2>
-This Month
-</h2>
-
-<button>
-All Time
-</button>
-
-</div>
-
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Rank</th>
-<th>Student</th>
-<th>Skills Taught</th>
-<th>Sessions</th>
-<th>XP</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-<td>🥇 01</td>
-<td>Priya Sharma</td>
-<td>18</td>
-<td>32</td>
-<td><b>2,840</b></td>
-</tr>
-
-<tr>
-<td>🥈 02</td>
-<td>Rahul Kumar</td>
-<td>15</td>
-<td>28</td>
-<td><b>2,590</b></td>
-</tr>
-
-<tr>
-<td>🥉 03</td>
-<td>Neha Singh</td>
-<td>14</td>
-<td>25</td>
-<td><b>2,340</b></td>
-</tr>
-
-<tr>
-<td>⭐ 12</td>
-<td>Alex Student</td>
-<td>8</td>
-<td>20</td>
-<td><b>1,280</b></td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- PROFILE -->
-
-<div id="profile" class="page">
-
-<div class="page-header">
-
-<h1>
-My Profile
-</h1>
-
-<p>
-Show the community what you know.
-</p>
-
-</div>
-
-
-<div class="profile-grid">
-
-
-<div class="card profile-card">
-
-<div class="avatar">
-AS
-</div>
-
-<h2>
-Alex Student
-</h2>
-
-<p>
-Diploma Student • Developer
-</p>
-
-
-<div class="tags">
-
-<span class="tag">Python</span>
-<span class="tag">HTML/CSS</span>
-<span class="tag">SQL</span>
-<span class="tag">JavaScript</span>
-
-</div>
-
-
-<div style="text-align:left;margin-top:20px">
-
-<div
-style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:7px"
->
-
-<span>
-Profile strength
-</span>
-
-<span>
-82%
-</span>
-
-</div>
-
-
-<div class="progress">
-
-<span style="width:82%"></span>
-
-</div>
-
-</div>
-
-
-<button
-class="primary"
-style="width:100%;margin-top:20px"
-onclick="showToast('Profile editor opened')"
->
-Edit Profile
-</button>
-
-</div>
-
-
-<div class="card">
-
-<div class="card-head">
-
-<h2>
-About You
-</h2>
-
-<button onclick="showToast('Changes saved')">
-Save Changes
-</button>
-
-</div>
-
-
-<div class="form-grid">
-
-<div class="field">
-
-<label>
-Full Name
-</label>
-
-<input value="Alex Student">
-
-</div>
-
-
-<div class="field">
-
-<label>
-College
-</label>
-
-<input value="Aditya Polytechnic College">
-
-</div>
-
-
-<div class="field">
-
-<label>
-Location
-</label>
-
-<input value="Andhra Pradesh, India">
-
-</div>
-
-
-<div class="field">
-
-<label>
-Learning Goal
-</label>
-
-<input value="Full Stack Developer">
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Bio
-</label>
-
-<textarea>I love building web applications and sharing programming knowledge with other students.</textarea>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-</section>
-
-</main>
-
-</div>
-
-
-<!-- OFFER SKILL MODAL -->
-
-<div
-class="modal-bg"
-id="modalBg"
->
-
-<div class="modal">
-
-<div class="modal-head">
-
-<h2>
-Offer a Skill
-</h2>
-
-<button
-class="close"
-onclick="closeModal()"
->
-✕
-</button>
-
-</div>
-
-
-<div class="form-grid">
-
-<div class="field full">
-
-<label>
-Skill you can teach
-</label>
-
-<input
-id="offerSkill"
-placeholder="e.g. Python, Photoshop, Guitar"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Category
-</label>
-
-<select id="offerCategory">
-
-<option>Programming</option>
-<option>Design</option>
-<option>Data</option>
-<option>Business</option>
-<option>Creative</option>
-
-</select>
-
-</div>
-
-
-<div class="field">
-
-<label>
-Level
-</label>
-
-<select>
-
-<option>Beginner</option>
-<option>Intermediate</option>
-<option>Advanced</option>
-
-</select>
-
-</div>
-
-
-<div class="field full">
-
-<label>
-Description
-</label>
-
-<textarea
-id="offerDesc"
-placeholder="What can you help another student learn?"
-></textarea>
-
-</div>
-
-</div>
-
-
-<div class="modal-actions">
-
-<button
-class="cancel"
-onclick="closeModal()"
->
-Cancel
-</button>
-
-<button
-class="primary"
-onclick="submitOffer()"
->
-Publish Skill
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-class="toast"
-id="toast"
-></div>
-
+    <aside class="sidebar">
+        <div class="logo">SkillSwap</div>
+
+        <div class="nav-item active" onclick="showPage('dashboard',this)">Dashboard</div>
+        <div class="nav-item" onclick="showPage('discover',this)">Discover Skills</div>
+        <div class="nav-item" onclick="showPage('matches',this)">My Matches</div>
+        <div class="nav-item" onclick="showPage('sessions',this)">Sessions</div>
+        <div class="nav-item" onclick="showPage('messages',this)">Messages</div>
+        <div class="nav-item" onclick="showPage('leaderboard',this)">Leaderboard</div>
+        <div class="nav-item" onclick="showPage('profile',this)">Edit Student Details</div>
+
+        <button class="logout" onclick="logout()">Logout</button>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <input class="search" id="globalSearch" placeholder="Search skills, students..." onkeyup="searchContent()">
+
+            <div class="student-mini">
+                <div class="avatar" id="topAvatar">S</div>
+                <div>
+                    <strong id="topName">Student</strong>
+                    <div style="font-size:12px;color:#6b7280">Student</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <section class="page active" id="dashboard">
+
+                <div class="page-title">
+                    <h1>Dashboard</h1>
+                    <p>Welcome to your SkillSwap student dashboard.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <p>Skills Offered</p>
+                        <h3>8</h3>
+                        <p>Active skills</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Skills Learned</p>
+                        <h3>5</h3>
+                        <p>This semester</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Matches</p>
+                        <h3>12</h3>
+                        <p>Potential students</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Sessions</p>
+                        <h3>7</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+
+                <div class="grid">
+
+                    <div class="card">
+                        <h3>Recommended Match</h3>
+                        <div class="match-card">
+                            <div class="match-avatar">RK</div>
+                            <div>
+                                <strong>Rahul Kumar</strong>
+                                <p>Java • Spring Boot</p>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="toast('Connection request sent')">Connect</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>Upcoming Session</h3>
+                        <h2 style="margin:12px 0">Python Basics</h2>
+                        <p>Today • 5:30 PM</p>
+                        <button class="action-btn" onclick="toast('Opening session...')">Join Session</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>Popular Skills</h3>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Cyber Security</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="page" id="discover">
+
+                <div class="page-title">
+                    <h1>Discover Skills</h1>
+                    <p>Find students who can teach you something useful.</p>
+                </div>
+
+                <div class="grid" id="skillGrid">
+
+                    <div class="card searchable">
+                        <h3>Python Programming</h3>
+                        <p>Learn Python from beginner to advanced level.</p>
+                        <span class="skill-tag">Programming</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                    <div class="card searchable">
+                        <h3>Web Development</h3>
+                        <p>HTML, CSS, JavaScript and modern frontend development.</p>
+                        <span class="skill-tag">Web</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                    <div class="card searchable">
+                        <h3>Java</h3>
+                        <p>Object-oriented programming and Java development.</p>
+                        <span class="skill-tag">Programming</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                    <div class="card searchable">
+                        <h3>SQL & DBMS</h3>
+                        <p>Databases, SQL queries and database management.</p>
+                        <span class="skill-tag">Database</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                    <div class="card searchable">
+                        <h3>Cyber Security</h3>
+                        <p>Learn defensive security concepts and networking.</p>
+                        <span class="skill-tag">Security</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                    <div class="card searchable">
+                        <h3>UI/UX Design</h3>
+                        <p>Learn interface design and user experience basics.</p>
+                        <span class="skill-tag">Design</span>
+                        <br>
+                        <button class="action-btn" onclick="toast('Skill request sent')">Learn This</button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="page" id="matches">
+
+                <div class="page-title">
+                    <h1>My Matches</h1>
+                    <p>Students matched with your skills.</p>
+                </div>
+
+                <div class="grid">
+
+                    <div class="card">
+                        <div class="match-card">
+                            <div class="match-avatar">AR</div>
+                            <div>
+                                <h3>Anjali Reddy</h3>
+                                <p>React • JavaScript</p>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="toast('Message sent')">Message</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="match-card">
+                            <div class="match-avatar">SK</div>
+                            <div>
+                                <h3>Sai Kumar</h3>
+                                <p>Python • Flask</p>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="toast('Message sent')">Message</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="match-card">
+                            <div class="match-avatar">VP</div>
+                            <div>
+                                <h3>Vijay Prasad</h3>
+                                <p>SQL • DBMS</p>
+                            </div>
+                        </div>
+                        <button class="action-btn" onclick="toast('Message sent')">Message</button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="page" id="sessions">
+
+                <div class="page-title">
+                    <h1>Sessions</h1>
+                    <p>Your learning sessions.</p>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Student</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Python</td>
+                            <td>Rahul Kumar</td>
+                            <td>30 Sep 2026</td>
+                            <td>Upcoming</td>
+                        </tr>
+
+                        <tr>
+                            <td>React</td>
+                            <td>Anjali Reddy</td>
+                            <td>28 Sep 2026</td>
+                            <td>Completed</td>
+                        </tr>
+
+                        <tr>
+                            <td>SQL</td>
+                            <td>Vijay Prasad</td>
+                            <td>25 Sep 2026</td>
+                            <td>Completed</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </section>
+
+            <section class="page" id="messages">
+
+                <div class="page-title">
+                    <h1>Messages</h1>
+                    <p>Chat with your SkillSwap connections.</p>
+                </div>
+
+                <div class="grid">
+
+                    <div class="card">
+                        <h3>Rahul Kumar</h3>
+                        <p>Hi! Are you available for a Python session today?</p>
+                        <button class="action-btn" onclick="toast('Chat opened')">Open Chat</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>Anjali Reddy</h3>
+                        <p>Can you help me with JavaScript?</p>
+                        <button class="action-btn" onclick="toast('Chat opened')">Open Chat</button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="page" id="leaderboard">
+
+                <div class="page-title">
+                    <h1>Leaderboard</h1>
+                    <p>Top SkillSwap contributors.</p>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Student</th>
+                            <th>Skills Shared</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Rahul Kumar</td>
+                            <td>24</td>
+                            <td>980</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Anjali Reddy</td>
+                            <td>21</td>
+                            <td>910</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>Vijay Prasad</td>
+                            <td>18</td>
+                            <td>850</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </section>
+
+            <section class="page" id="profile">
+
+                <div class="page-title">
+                    <h1>Edit Student Details</h1>
+                    <p>Update your student profile information.</p>
+                </div>
+
+                <div class="profile-container">
+
+                    <div class="profile-header">
+                        <div class="big-avatar" id="profileAvatar">S</div>
+
+                        <div>
+                            <h2 id="profileDisplayName">Student</h2>
+                            <p>Student Profile</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-form">
+
+                        <div>
+                            <label>Full Name</label>
+                            <input id="studentName" type="text" placeholder="Enter your full name">
+                        </div>
+
+                        <div>
+                            <label>Email</label>
+                            <input id="studentEmail" type="email" placeholder="Enter your email">
+                        </div>
+
+                        <div>
+                            <label>Phone Number</label>
+                            <input id="studentPhone" type="tel" placeholder="Enter phone number">
+                        </div>
+
+                        <div>
+                            <label>College</label>
+                            <input id="studentCollege" type="text" placeholder="Enter college name">
+                        </div>
+
+                        <div>
+                            <label>Branch</label>
+                            <select id="studentBranch">
+                                <option value="">Select Branch</option>
+                                <option>CSE</option>
+                                <option>CME</option>
+                                <option>ECE</option>
+                                <option>EEE</option>
+                                <option>Mechanical</option>
+                                <option>Civil</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Year</label>
+                            <select id="studentYear">
+                                <option value="">Select Year</option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Semester</label>
+                            <select id="studentSemester">
+                                <option value="">Select Semester</option>
+                                <option>1st Semester</option>
+                                <option>2nd Semester</option>
+                                <option>3rd Semester</option>
+                                <option>4th Semester</option>
+                                <option>5th Semester</option>
+                                <option>6th Semester</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Location</label>
+                            <input id="studentLocation" type="text" placeholder="City / Location">
+                        </div>
+
+                        <div class="full">
+                            <label>Technical Skills</label>
+                            <input id="studentSkills" type="text" placeholder="Python, Java, HTML, CSS, SQL">
+                        </div>
+
+                        <div class="full">
+                            <label>About Me</label>
+                            <textarea id="studentBio" placeholder="Write something about yourself..."></textarea>
+                        </div>
+
+                        <div class="full">
+                            <button class="save-profile" onclick="saveStudentDetails()">
+                                Save Student Details
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 
-/* AUTH */
+let user = JSON.parse(localStorage.getItem("skillswapUser")) || {
+    name:"Student",
+    email:"",
+    phone:"",
+    college:"",
+    branch:"",
+    year:"",
+    semester:"",
+    location:"",
+    skills:"",
+    bio:""
+};
 
-function showRegister(event){
-
-event.preventDefault();
-
-document.getElementById("loginForm").style.display="none";
-
-document.getElementById("registerForm").style.display="block";
-
+function showRegister(){
+    document.getElementById("loginForm").style.display="none";
+    document.getElementById("registerForm").style.display="block";
 }
 
-
-function showLogin(event){
-
-event.preventDefault();
-
-document.getElementById("registerForm").style.display="none";
-
-document.getElementById("loginForm").style.display="block";
-
+function showLogin(){
+    document.getElementById("registerForm").style.display="none";
+    document.getElementById("loginForm").style.display="block";
 }
 
+function register(){
 
-function togglePassword(id,button){
+    let name=document.getElementById("registerName").value.trim();
+    let email=document.getElementById("registerEmail").value.trim();
+    let password=document.getElementById("registerPassword").value;
 
-const input=document.getElementById(id);
+    if(!name || !email || !password){
+        alert("Please fill all fields");
+        return;
+    }
 
-if(input.type==="password"){
+    user.name=name;
+    user.email=email;
 
-input.type="text";
+    localStorage.setItem("skillswapUser",JSON.stringify(user));
+    sessionStorage.setItem("skillswapLoggedIn","true");
 
-button.textContent="Hide";
+    updateProfile();
 
-}else{
+    document.body.classList.add("authenticated");
 
-input.type="password";
-
-button.textContent="Show";
-
+    toast("Account created successfully");
 }
 
+function login(){
+
+    let email=document.getElementById("loginEmail").value.trim();
+    let password=document.getElementById("loginPassword").value;
+
+    if(!email || !password){
+        alert("Please enter email and password");
+        return;
+    }
+
+    user.email=email;
+
+    if(!user.name || user.name==="Student"){
+        user.name=email.split("@")[0];
+    }
+
+    localStorage.setItem("skillswapUser",JSON.stringify(user));
+    sessionStorage.setItem("skillswapLoggedIn","true");
+
+    document.body.classList.add("authenticated");
+
+    updateProfile();
+
+    toast("Login successful");
 }
 
+function logout(){
 
-function registerUser(event){
+    sessionStorage.removeItem("skillswapLoggedIn");
 
-event.preventDefault();
+    document.body.classList.remove("authenticated");
 
-const name=document.getElementById("registerName").value.trim();
-
-const email=document.getElementById("registerEmail").value.trim().toLowerCase();
-
-const password=document.getElementById("registerPassword").value;
-
-if(password.length<8){
-
-showToast("Password must contain at least 8 characters");
-
-return;
-
+    showLogin();
 }
 
-/*
-Demo only.
+function showPage(pageId,element){
 
-Never store real passwords in localStorage/sessionStorage
-for a production application.
-*/
+    document.querySelectorAll(".page").forEach(page=>{
+        page.classList.remove("active");
+    });
 
-sessionStorage.setItem(
-"skillSwapAccount",
-JSON.stringify({
-name:name,
-email:email
-})
-);
+    document.getElementById(pageId).classList.add("active");
 
-document.getElementById("loginEmail").value=email;
+    document.querySelectorAll(".nav-item").forEach(item=>{
+        item.classList.remove("active");
+    });
 
-document.getElementById("loginPassword").value="";
+    if(element){
+        element.classList.add("active");
+    }
 
-showLogin(event);
-
-showToast("Account created. Please login.");
-
+    if(pageId==="profile"){
+        loadStudentDetails();
+    }
 }
 
+function saveStudentDetails(){
 
-function loginUser(event){
+    user.name=document.getElementById("studentName").value.trim();
+    user.email=document.getElementById("studentEmail").value.trim();
+    user.phone=document.getElementById("studentPhone").value.trim();
+    user.college=document.getElementById("studentCollege").value.trim();
+    user.branch=document.getElementById("studentBranch").value;
+    user.year=document.getElementById("studentYear").value;
+    user.semester=document.getElementById("studentSemester").value;
+    user.location=document.getElementById("studentLocation").value.trim();
+    user.skills=document.getElementById("studentSkills").value.trim();
+    user.bio=document.getElementById("studentBio").value.trim();
 
-event.preventDefault();
+    localStorage.setItem("skillswapUser",JSON.stringify(user));
 
-const email=
-document.getElementById("loginEmail")
-.value
-.trim()
-.toLowerCase();
+    updateProfile();
 
-const password=
-document.getElementById("loginPassword")
-.value;
-
-const saved=
-sessionStorage.getItem("skillSwapAccount");
-
-if(!saved){
-
-showToast("Please create an account first");
-
-return;
-
+    toast("Student details saved successfully");
 }
 
-const account=JSON.parse(saved);
+function loadStudentDetails(){
 
-if(
-email!==account.email ||
-password.length<8
-){
+    document.getElementById("studentName").value=user.name || "";
+    document.getElementById("studentEmail").value=user.email || "";
+    document.getElementById("studentPhone").value=user.phone || "";
+    document.getElementById("studentCollege").value=user.college || "";
+    document.getElementById("studentBranch").value=user.branch || "";
+    document.getElementById("studentYear").value=user.year || "";
+    document.getElementById("studentSemester").value=user.semester || "";
+    document.getElementById("studentLocation").value=user.location || "";
+    document.getElementById("studentSkills").value=user.skills || "";
+    document.getElementById("studentBio").value=user.bio || "";
 
-showToast("Invalid login details");
-
-return;
-
+    updateProfile();
 }
 
-sessionStorage.setItem(
-"skillSwapLoggedIn",
-"true"
-);
+function updateProfile(){
 
-document.body.classList.add("authenticated");
+    let name=user.name || "Student";
+    let firstLetter=name.charAt(0).toUpperCase();
 
-document.getElementById("authScreen").style.display="none";
+    document.getElementById("topName").textContent=name;
+    document.getElementById("topAvatar").textContent=firstLetter;
 
-showToast(
-"Welcome to SkillSwap, "+account.name+"!"
-);
-
+    document.getElementById("profileDisplayName").textContent=name;
+    document.getElementById("profileAvatar").textContent=firstLetter;
 }
 
+function searchContent(){
 
-function logoutUser(){
+    let search=document.getElementById("globalSearch").value.toLowerCase();
 
-sessionStorage.removeItem(
-"skillSwapLoggedIn"
-);
+    document.querySelectorAll(".searchable").forEach(card=>{
 
-document.body.classList.remove(
-"authenticated"
-);
+        let text=card.textContent.toLowerCase();
 
-document.getElementById("authScreen").style.display="flex";
+        if(text.includes(search)){
+            card.style.display="";
+        }else{
+            card.style.display="none";
+        }
 
-showLogin({
-preventDefault:function(){}
-});
-
-showToast("Logged out successfully");
-
+    });
 }
 
+function toast(message){
 
-function checkLogin(){
+    let box=document.getElementById("toast");
 
-if(
-sessionStorage.getItem("skillSwapLoggedIn")==="true"
-){
+    box.textContent=message;
+    box.classList.add("show");
 
-document.body.classList.add("authenticated");
-
-document.getElementById("authScreen").style.display="none";
-
+    setTimeout(()=>{
+        box.classList.remove("show");
+    },2500);
 }
 
-}
+window.onload=function(){
 
+    if(sessionStorage.getItem("skillswapLoggedIn")==="true"){
 
-/* DATA */
+        document.body.classList.add("authenticated");
 
-const skills=[
+        user=JSON.parse(localStorage.getItem("skillswapUser")) || user;
 
-{
-name:"React Development",
-cat:"Programming",
-icon:"⚛️",
-level:"Advanced",
-desc:"Build modern responsive interfaces with React and component architecture.",
-user:"Priya",
-initial:"PR"
-},
+        updateProfile();
+    }
 
-{
-name:"Python Programming",
-cat:"Programming",
-icon:"🐍",
-level:"Advanced",
-desc:"Learn Python fundamentals, OOP, APIs and practical projects.",
-user:"Neha",
-initial:"NS"
-},
-
-{
-name:"UI/UX Design",
-cat:"Design",
-icon:"🎨",
-level:"Intermediate",
-desc:"Design clean interfaces, wireframes and user experiences.",
-user:"Rahul",
-initial:"RK"
-},
-
-{
-name:"Data Analytics",
-cat:"Data",
-icon:"📊",
-level:"Intermediate",
-desc:"Learn Excel, SQL and data visualization.",
-user:"Kiran",
-initial:"KD"
-},
-
-{
-name:"Digital Marketing",
-cat:"Business",
-icon:"📣",
-level:"Advanced",
-desc:"Learn social media, SEO and content strategy.",
-user:"Ananya",
-initial:"AN"
-},
-
-{
-name:"Video Editing",
-cat:"Creative",
-icon:"🎬",
-level:"Intermediate",
-desc:"Edit engaging videos and add professional effects.",
-user:"Vikram",
-initial:"VK"
-},
-
-{
-name:"Java Development",
-cat:"Programming",
-icon:"☕",
-level:"Advanced",
-desc:"Learn OOP, collections and backend fundamentals.",
-user:"Arjun",
-initial:"AR"
-},
-
-{
-name:"Figma Design",
-cat:"Design",
-icon:"🖌️",
-level:"Beginner",
-desc:"Create prototypes and polished interface designs.",
-user:"Meera",
-initial:"MR"
-},
-
-{
-name:"Public Speaking",
-cat:"Creative",
-icon:"🎤",
-level:"Intermediate",
-desc:"Improve presentation and communication skills.",
-user:"Sanjay",
-initial:"SJ"
-}
-
-];
-
-
-const matches=[
-
-{
-name:"Priya Sharma",
-initial:"PS",
-skill:"React Development",
-want:"SQL",
-percent:96
-},
-
-{
-name:"Rahul Kumar",
-initial:"RK",
-skill:"UI/UX Design",
-want:"Python",
-percent:91
-},
-
-{
-name:"Neha Singh",
-initial:"NS",
-skill:"Python Programming",
-want:"JavaScript",
-percent:88
-},
-
-{
-name:"Kiran Das",
-initial:"KD",
-skill:"Data Analytics",
-want:"HTML/CSS",
-percent:84
-}
-
-];
-
-
-let coins=245;
-
-
-/* NAVIGATION */
-
-function go(page){
-
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
-
-document.getElementById(page)
-.classList.add("active");
-
-document.querySelectorAll(".nav button")
-.forEach(button=>{
-
-button.classList.toggle(
-"active",
-button.dataset.page===page
-);
-
-});
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-
-/* SKILL CARD */
-
-function skillCard(s){
-
-return `
-
-<div class="skill-card">
-
-<div class="skill-top">
-
-<div class="skill-avatar">
-${s.icon}
-</div>
-
-<span class="level">
-${s.level}
-</span>
-
-</div>
-
-<h3>
-${s.name}
-</h3>
-
-<p>
-${s.desc}
-</p>
-
-<div class="tags">
-
-<span class="tag">
-${s.cat}
-</span>
-
-<span class="tag">
-1:1 sessions
-</span>
-
-</div>
-
-<div class="skill-footer">
-
-<div class="skill-user">
-
-<span class="avatar">
-${s.initial}
-</span>
-
-${s.user}
-
-</div>
-
-<button
-class="small-btn"
-onclick="requestSkill('${s.name}')"
->
-Connect
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-function renderSkills(list=skills){
-
-document.getElementById("discoverGrid")
-.innerHTML=list.map(skillCard).join("");
-
-}
-
-
-function renderPopular(){
-
-document.getElementById("popularSkills")
-.innerHTML=
-skills.slice(0,6)
-.map(skillCard)
-.join("");
-
-}
-
-
-/* MATCHES */
-
-function renderMatches(){
-
-document.getElementById("matchList")
-.innerHTML=matches.map(m=>`
-
-<div class="match">
-
-<div class="avatar">
-${m.initial}
-</div>
-
-<div class="match-info">
-
-<strong>
-${m.name}
-</strong>
-
-<span>
-Teaches ${m.skill} • Wants ${m.want}
-</span>
-
-</div>
-
-<div class="match-percent">
-${m.percent}%
-</div>
-
-<button
-class="small-btn"
-onclick="requestSkill('${m.name}')"
->
-Connect
-</button>
-
-</div>
-
-`).join("");
-
-
-document.getElementById("dashMatches")
-.innerHTML=
-matches.slice(0,3).map(m=>`
-
-<div class="match">
-
-<div class="avatar">
-${m.initial}
-</div>
-
-<div class="match-info">
-
-<strong>
-${m.name}
-</strong>
-
-<span>
-Teaches ${m.skill}
-</span>
-
-</div>
-
-<div class="match-percent">
-${m.percent}%
-</div>
-
-<button
-class="small-btn"
-onclick="requestSkill('${m.name}')"
->
-Connect
-</button>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* SESSIONS */
-
-function renderSessions(){
-
-const sessions=[
-
-["OCT","02","React Basics","Priya","6:00 PM"],
-
-["OCT","04","UI/UX Design","Rahul","5:30 PM"],
-
-["OCT","06","Python Practice","Neha","7:00 PM"],
-
-["OCT","09","SQL Fundamentals","Alex","6:30 PM"]
-
-];
-
-
-document.getElementById("sessionList")
-.innerHTML=sessions.map(s=>`
-
-<div class="session">
-
-<div class="date-box">
-${s[0]}<br>${s[1]}
-</div>
-
-<div style="flex:1">
-
-<strong>
-${s[2]}
-</strong>
-
-<p>
-with ${s[3]} • ${s[4]}
-</p>
-
-</div>
-
-<button
-class="small-btn"
-onclick="showToast('Session details opened')"
->
-Details
-</button>
-
-</div>
-
-`).join("");
-
-}
-
-
-/* CONNECT */
-
-function requestSkill(name){
-
-coins+=5;
-
-document.getElementById("coinStat")
-.textContent=coins;
-
-document.getElementById("sideCoins")
-.textContent=coins+" 🪙";
-
-showToast(
-"Connection request sent for "+name
-);
-
-}
-
-
-/* TOAST */
-
-function showToast(message){
-
-const toast=
-document.getElementById("toast");
-
-toast.textContent=message;
-
-toast.classList.add("show");
-
-clearTimeout(window.toastTimer);
-
-window.toastTimer=setTimeout(()=>{
-
-toast.classList.remove("show");
-
-},2500);
-
-}
-
-
-/* MODAL */
-
-function openModal(){
-
-document.getElementById("modalBg")
-.classList.add("show");
-
-}
-
-
-function closeModal(){
-
-document.getElementById("modalBg")
-.classList.remove("show");
-
-}
-
-
-function submitOffer(){
-
-const skill=
-document.getElementById("offerSkill")
-.value.trim();
-
-if(!skill){
-
-showToast("Enter a skill name");
-
-return;
-
-}
-
-closeModal();
-
-showToast(
-skill+" published successfully"
-);
-
-document.getElementById("offerSkill")
-.value="";
-
-document.getElementById("offerDesc")
-.value="";
-
-}
-
-
-/* CHAT */
-
-function sendMessage(){
-
-const input=
-document.getElementById("chatInput");
-
-const text=input.value.trim();
-
-if(!text)return;
-
-const messages=
-document.getElementById("messages");
-
-const div=document.createElement("div");
-
-div.className="msg me";
-
-div.textContent=text;
-
-messages.appendChild(div);
-
-input.value="";
-
-setTimeout(()=>{
-
-const reply=document.createElement("div");
-
-reply.className="msg";
-
-reply.textContent=
-"Sounds good! Let's discuss it in our next session. 😊";
-
-messages.appendChild(reply);
-
-},700);
-
-}
-
-
-function selectChat(name){
-
-document.getElementById("chatName")
-.textContent=name;
-
-showToast(
-"Chat opened with "+name
-);
-
-}
-
-
-/* SEARCH */
-
-function globalSearch(){
-
-const query=
-document.getElementById("globalSearch")
-.value
-.toLowerCase()
-.trim();
-
-if(
-document.getElementById("discover")
-.classList.contains("active")
-){
-
-const result=query
-?
-skills.filter(s=>
-(s.name+" "+s.cat+" "+s.user)
-.toLowerCase()
-.includes(query)
-)
-:
-skills;
-
-renderSkills(result);
-
-}
-
-}
-
-
-/* NAV BUTTONS */
-
-document.querySelectorAll(".nav button")
-.forEach(button=>{
-
-button.addEventListener(
-"click",
-()=>{
-go(button.dataset.page)
-}
-);
-
-});
-
-
-/* FILTERS */
-
-document.querySelectorAll("#filters .filter")
-.forEach(button=>{
-
-button.addEventListener(
-"click",
-()=>{
-
-document.querySelectorAll(
-"#filters .filter"
-)
-.forEach(x=>
-x.classList.remove("active")
-);
-
-button.classList.add("active");
-
-const filter=
-button.dataset.filter;
-
-renderSkills(
-filter==="All"
-?
-skills
-:
-skills.filter(
-s=>s.cat===filter
-)
-);
-
-}
-);
-
-});
-
-
-/* CLOSE MODAL */
-
-document.getElementById("modalBg")
-.addEventListener(
-"click",
-e=>{
-
-if(e.target.id==="modalBg"){
-closeModal();
-}
-
-});
-
-
-/* INITIALIZE */
-
-checkLogin();
-
-renderSkills();
-
-renderPopular();
-
-renderMatches();
-
-renderSessions();
+};
 
 </script>
 
 </body>
 </html>
-```
