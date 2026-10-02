@@ -1236,10 +1236,6 @@ th{
 
 <div class="top-actions">
 
-<button class="icon-btn" onclick="showToast('You have 3 new notifications')">
-    🔔
-</button>
-
 <button class="primary" onclick="openModal()">
     + Offer a Skill
 </button>
@@ -2350,7 +2346,7 @@ updateStudentUI(s);
 
 function saveStudentDetails(){
 const s={
-name:document.getElementById("studentName").value.trim()||"Alex Student",
+name:document.getElementById("studentName").value.trim(),
 email:document.getElementById("studentEmail").value.trim(),
 phone:document.getElementById("studentPhone").value.trim(),
 college:document.getElementById("studentCollege").value.trim(),
