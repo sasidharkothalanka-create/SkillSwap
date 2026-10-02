@@ -1155,7 +1155,7 @@ th{
 <button class="primary" style="width:100%;" onclick="login()">Login</button>
 <button class="auth-secondary" onclick="showCreateAccount()">Create Account</button>
 <p style="font-size:12px;color:var(--muted);margin-top:12px;text-align:center;">New to SkillSwap? Create your student account above.</p>
-<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Demo frontend login</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;"</p>
 </div>
 
 <div id="createAccountCard" class="card" style="width:min(420px,100%);padding:30px;box-shadow:var(--shadow);display:none;">
@@ -1167,7 +1167,7 @@ th{
 <div class="field" style="margin-bottom:18px;"><label>Confirm Password</label><input id="createConfirmPassword" type="password" placeholder="Confirm your password"></div>
 <button class="primary" style="width:100%;" onclick="createAccount()">Create Account</button>
 <button class="auth-secondary" onclick="showLogin()">Back to Login</button>
-<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Demo account is stored in this browser.</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;"></p>
 </div>
 </div>
 
@@ -1209,7 +1209,8 @@ th{
 <div class="profile-mini">
     <div class="avatar">AS</div>
     <div>
-        
+        <strong id = createName></strong>
+        <weak id = Role></weak>
     </div>
 </div>
 
@@ -1499,18 +1500,18 @@ Creative
 AS
 </div>
 
-<h2></h2>
+<h2 placeholder=enter name></h2>
 
 <p>
-Diploma Student • Developer
+
 </p>
 
 <div class="tags">
 
-<span class="tag">Python</span>
-<span class="tag">HTML/CSS</span>
-<span class="tag">SQL</span>
-<span class="tag">JavaScript</span>
+<span class="tag"></span>
+<span class="tag"></span>
+<span class="tag"></span>
+<span class="tag"></span>
 
 </div>
 
@@ -1557,7 +1558,7 @@ Save Changes
 
 <div class="field">
 <label>Email</label>
-<input id="studentEmail" type="email" value="student@example.com">
+<input id="studentEmail" type="email" placeholder="student@example.com">
 </div>
 
 <div class="field">
@@ -1567,14 +1568,13 @@ Save Changes
 
 <div class="field">
 <label>College</label>
-<input id="studentCollege" value="Aditya Polytechnic College">
+<input id="studentCollege" placeholder="Aditya University">
 </div>
 
 <div class="field">
 <label>Branch</label>
-<select id="studentBranch">
-<option value="">Select Branch</option>
-<option>CSE</option><option>CME</option><option>ECE</option><option>EEE</option><option>Mechanical</option><option>Civil</option>
+<input id="studentBranch" >
+
 </select>
 </div>
 
@@ -1585,22 +1585,22 @@ Save Changes
 
 <div class="field">
 <label>Location</label>
-<input id="studentLocation" value="Andhra Pradesh, India">
+<input id="studentLocation" placeholder="Andhra Pradesh, India">
 </div>
 
 <div class="field">
 <label>Learning Goal</label>
-<input id="studentGoal" value="Full Stack Developer">
+<input id="studentGoal" placeholder="Full Stack Developer">
 </div>
 
 <div class="field full">
 <label>Technical Skills</label>
-<input id="studentSkills" value="Python, HTML/CSS, SQL, JavaScript">
+<input id="studentSkills" placeholder="Python, HTML/CSS, SQL, JavaScript">
 </div>
 
 <div class="field full">
 <label>Bio</label>
-<textarea id="studentBio">I love building web applications and sharing programming knowledge with other students.</textarea>
+<textarea id="studentBio" placeholder= "love building web applications and sharing programming knowledge with other students."></textarea>
 </div>
 
 </div>
@@ -1641,7 +1641,7 @@ Save Changes
 
 <input
 id="offerSkill"
-placeholder="e.g. Python, Photoshop, Guitar"
+placeholder="e.g. Python, Photoshop, Guitar">
 
 
 
@@ -1931,7 +1931,7 @@ ${s.user}
 class="small-btn"
 onclick="requestSkill('${s.name}')"
 >
-Connect
+watch
 </button>
 
 </div>
