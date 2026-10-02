@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -117,24 +116,6 @@ button{
     bottom:20px;
     left:16px;
     right:16px;
-}
-
-.coin-mini{
-    background:linear-gradient(135deg,#f7f5ff,#eeeaff);
-    border:1px solid #e3e0ff;
-    border-radius:16px;
-    padding:15px;
-    margin-bottom:12px;
-}
-
-.coin-mini small{
-    color:var(--muted);
-    display:block;
-    margin-bottom:5px;
-}
-
-.coin-mini strong{
-    font-size:22px;
 }
 
 .profile-mini{
@@ -1129,19 +1110,31 @@ th{
     .video-layout{grid-template-columns:1fr;}
 }
 </style>
-
 </head>
 
 <body>
 
 <div id="loginScreen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f7fb;padding:20px;">
-<div class="card" style="width:min(420px,100%);padding:30px;box-shadow:var(--shadow);">
+<div id="loginCard" class="card" style="width:min(420px,100%);padding:30px;box-shadow:var(--shadow);">
 <h1 style="margin-bottom:8px;color:var(--primary);">SkillSwap</h1>
 <p style="color:var(--muted);margin-bottom:22px;">Student Skill Exchange</p>
 <div class="field" style="margin-bottom:15px;"><label>Email</label><input id="loginEmail" type="email" placeholder="student@example.com"></div>
 <div class="field" style="margin-bottom:18px;"><label>Password</label><input id="loginPassword" type="password" placeholder="Enter password"></div>
 <button class="primary" style="width:100%;" onclick="login()">Login</button>
-<p style="font-size:12px;color:var(--muted);margin-top:15px;text-align:center;">Demo frontend login</p>
+<p style="font-size:13px;color:var(--muted);margin-top:18px;text-align:center;">New to SkillSwap? <button style="background:none;color:var(--primary);font-weight:700;" onclick="showCreateAccount()">Create Account</button></p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Demo frontend login</p>
+</div>
+
+<div id="createAccountCard" class="card" style="width:min(420px,100%);padding:30px;box-shadow:var(--shadow);display:none;">
+<h1 style="margin-bottom:8px;color:var(--primary);">Create Account</h1>
+<p style="color:var(--muted);margin-bottom:22px;">Join SkillSwap and start learning.</p>
+<div class="field" style="margin-bottom:15px;"><label>Full Name</label><input id="createName" type="text" placeholder="Your full name"></div>
+<div class="field" style="margin-bottom:15px;"><label>Email</label><input id="createEmail" type="email" placeholder="student@example.com"></div>
+<div class="field" style="margin-bottom:15px;"><label>Password</label><input id="createPassword" type="password" placeholder="Create a password"></div>
+<div class="field" style="margin-bottom:18px;"><label>Confirm Password</label><input id="createConfirmPassword" type="password" placeholder="Confirm your password"></div>
+<button class="primary" style="width:100%;" onclick="createAccount()">Create Account</button>
+<p style="font-size:13px;color:var(--muted);margin-top:18px;text-align:center;">Already have an account? <button style="background:none;color:var(--primary);font-weight:700;" onclick="showLogin()">Back to Login</button></p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Demo account is stored in this browser.</p>
 </div>
 </div>
 
@@ -1166,25 +1159,11 @@ th{
     <span>Discover Skills</span>
 </button>
 
-<button data-page="matches">
-    <span class="nav-icon">♧</span>
-    <span>My Matches</span>
-</button>
-
 <button data-page="sessions">
     <span class="nav-icon">◷</span>
     <span>Sessions</span>
 </button>
 
-<button data-page="messages">
-    <span class="nav-icon">▣</span>
-    <span>Messages</span>
-</button>
-
-<button data-page="leaderboard">
-    <span class="nav-icon">♛</span>
-    <span>Leaderboard</span>
-</button>
 
 <button data-page="profile">
     <span class="nav-icon">◉</span>
@@ -1194,11 +1173,6 @@ th{
 </nav>
 
 <div class="sidebar-bottom">
-
-<div class="coin-mini">
-    <small>SkillCoins</small>
-    <strong id="sideCoins">245 🪙</strong>
-</div>
 
 <div class="profile-mini">
     <div class="avatar">AS</div>
@@ -1254,7 +1228,7 @@ th{
 
 <p>
 Exchange skills with students around you.
-Build your network, earn SkillCoins, and grow together.
+Build your network, connect with learners, and grow together.
 </p>
 
 <div class="hero-actions">
@@ -1278,15 +1252,6 @@ Offer a Skill
 </div>
 
 <div class="stats">
-
-<div class="stat">
-<div class="stat-top">
-SkillCoins
-<span class="stat-icon">🪙</span>
-</div>
-<strong id="coinStat">245</strong>
-<small>+35 this week</small>
-</div>
 
 <div class="stat">
 <div class="stat-top">
@@ -1318,17 +1283,6 @@ Reputation
 </div>
 
 <div class="grid2">
-
-<div class="card">
-
-<div class="card-head">
-<h2>Recommended Matches</h2>
-<button onclick="go('matches')">View all</button>
-</div>
-
-<div id="dashMatches"></div>
-
-</div>
 
 <div class="card">
 
@@ -1375,6 +1329,7 @@ Explore all →
 <div class="skill-grid" id="popularSkills"></div>
 
 </div>
+
 
 <!-- DISCOVER -->
 
@@ -1424,7 +1379,6 @@ Creative
 
 
 <!-- COURSE LEARNING PAGE -->
-
 <div id="coursePage" class="page">
 <div class="learning-page">
 <div class="learning-head">
@@ -1436,7 +1390,7 @@ Creative
 </div>
 
 <div class="learning-video" id="learningVideoWrap">
-<iframe id="learningVideo" src="" title="SkillSwap Course Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe id="learningVideo" src="" title="SkillSwap Course Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <div id="localVideoFallback" class="local-video-fallback" style="display:none;">
 <div class="local-video-icon">▶</div>
 <h2 id="fallbackVideoTitle">Course Video</h2>
@@ -1473,21 +1427,6 @@ Creative
 </div>
 </div>
 
-<!-- MATCHES -->
-
-<div id="matches" class="page">
-
-<div class="page-header">
-<h1>My Matches</h1>
-<p>People whose skills complement yours.</p>
-</div>
-
-<div class="card">
-<div id="matchList"></div>
-</div>
-
-</div>
-
 <!-- SESSIONS -->
 
 <div id="sessions" class="page">
@@ -1512,172 +1451,7 @@ Creative
 
 </div>
 
-<!-- MESSAGES -->
 
-<div id="messages" class="page">
-
-<div class="page-header">
-<h1>Messages</h1>
-<p>Connect with your learning partners.</p>
-</div>
-
-<div class="card chat-layout">
-
-<div class="chat-list">
-
-<div class="chat-item active" onclick="selectChat('Priya')">
-<div class="avatar">PR</div>
-<div>
-<strong>Priya</strong>
-<p>See you tomorrow!</p>
-</div>
-</div>
-
-<div class="chat-item" onclick="selectChat('Rahul')">
-<div class="avatar">RK</div>
-<div>
-<strong>Rahul</strong>
-<p>Can you share the Figma file?</p>
-</div>
-</div>
-
-<div class="chat-item" onclick="selectChat('Neha')">
-<div class="avatar">NS</div>
-<div>
-<strong>Neha</strong>
-<p>Let's practice Python.</p>
-</div>
-</div>
-
-</div>
-
-<div class="chat-window">
-
-<div class="chat-head">
-
-<div class="avatar">PR</div>
-
-<div>
-<strong id="chatName">Priya</strong>
-<p style="font-size:11px;color:var(--muted)">
-Online
-</p>
-</div>
-
-</div>
-
-<div class="messages" id="messages">
-
-<div class="msg">
-Hey! I saw you're looking to learn React.
-</div>
-
-<div class="msg me">
-Yes! I can teach you SQL in exchange.
-</div>
-
-<div class="msg">
-Perfect. Let's do our first session tomorrow. 😊
-</div>
-
-</div>
-
-<div class="chat-input">
-
-<input
-id="chatInput"
-placeholder="Type a message..."
-onkeydown="if(event.key==='Enter')sendMessage()"
-
-
-
-<button class="primary" onclick="sendMessage()">
-Send
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- LEADERBOARD -->
-
-<div id="leaderboard" class="page">
-
-<div class="page-header">
-<h1>Leaderboard</h1>
-<p>Top contributors in the SkillSwap community.</p>
-</div>
-
-<div class="card">
-
-<div class="card-head">
-<h2>This Month</h2>
-<button>All Time</button>
-</div>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Rank</th>
-<th>Student</th>
-<th>Skills Taught</th>
-<th>Sessions</th>
-<th>XP</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-<td>🥇 01</td>
-<td>Priya Sharma</td>
-<td>18</td>
-<td>32</td>
-<td><b>2,840</b></td>
-</tr>
-
-<tr>
-<td>🥈 02</td>
-<td>Rahul Kumar</td>
-<td>15</td>
-<td>28</td>
-<td><b>2,590</b></td>
-</tr>
-
-<tr>
-<td>🥉 03</td>
-<td>Neha Singh</td>
-<td>14</td>
-<td>25</td>
-<td><b>2,340</b></td>
-</tr>
-
-<tr>
-<td>⭐ 12</td>
-<td>Alex Student</td>
-<td>8</td>
-<td>20</td>
-<td><b>1,280</b></td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
 
 <!-- PROFILE -->
 
@@ -1728,13 +1502,12 @@ Diploma Student • Developer
 class="primary"
 style="width:100%;margin-top:20px"
 onclick="focusProfileEditor()"
-
-
-
+>
 Edit Profile
 </button>
 
 </div>
+
 
 <div class="card" id="profileEditor">
 
@@ -1814,6 +1587,7 @@ Save Changes
 
 </div>
 
+
 <!-- MODAL -->
 
 <div class="modal-bg" id="modalBg">
@@ -1839,8 +1613,7 @@ Save Changes
 <input
 id="offerSkill"
 placeholder="e.g. Python, Photoshop, Guitar"
-
-
+>
 
 </div>
 
@@ -1917,7 +1690,7 @@ Publish Skill
 <div class="video-layout">
 <div>
 <div class="video-player">
-<iframe id="courseVideo" src="" title="SkillSwap Course Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe id="courseVideo" src="" title="SkillSwap Course Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 <div class="video-info" style="margin-top:12px;">
 <h2 id="videoSkillName"></h2>
@@ -1946,6 +1719,7 @@ Publish Skill
 </div>
 
 <div class="toast" id="toast"></div>
+
 
 <script>
 
@@ -2044,44 +1818,7 @@ initial:"SJ"
 ];
 
 
-const matches=[
 
-{
-name:"Priya Sharma",
-initial:"PS",
-skill:"React Development",
-want:"SQL",
-percent:96
-},
-
-{
-name:"Rahul Kumar",
-initial:"RK",
-skill:"UI/UX Design",
-want:"Python",
-percent:91
-},
-
-{
-name:"Neha Singh",
-initial:"NS",
-skill:"Python Programming",
-want:"JavaScript",
-percent:88
-},
-
-{
-name:"Kiran Das",
-initial:"KD",
-skill:"Data Analytics",
-want:"HTML/CSS",
-percent:84
-}
-
-];
-
-
-let coins=245;
 
 
 /* PAGE NAVIGATION */
@@ -2195,88 +1932,6 @@ skills.slice(0,6).map(skillCard).join("");
 }
 
 
-/* MATCHES */
-
-function renderMatches(){
-
-document.getElementById("matchList").innerHTML=
-
-matches.map(m=>`
-
-<div class="match">
-
-<div class="avatar">
-${m.initial}
-</div>
-
-<div class="match-info">
-
-<strong>
-${m.name}
-</strong>
-
-<span>
-Teaches ${m.skill} • Wants ${m.want}
-</span>
-
-</div>
-
-<div class="match-percent">
-${m.percent}%
-</div>
-
-<button
-class="small-btn"
-onclick="requestSkill('${m.name}')"
->
-Connect
-</button>
-
-</div>
-
-`).join("");
-
-
-document.getElementById("dashMatches").innerHTML=
-
-matches.slice(0,3).map(m=>`
-
-<div class="match">
-
-<div class="avatar">
-${m.initial}
-</div>
-
-<div class="match-info">
-
-<strong>
-${m.name}
-</strong>
-
-<span>
-Teaches ${m.skill}
-</span>
-
-</div>
-
-<div class="match-percent">
-${m.percent}%
-</div>
-
-<button
-class="small-btn"
-onclick="requestSkill('${m.name}')"
->
-Connect
-</button>
-
-</div>
-
-`).join("");
-
-}
-
-
 /* SESSIONS */
 
 function renderSessions(){
@@ -2332,53 +1987,16 @@ Details
 
 /* CONNECT + COURSE PAGE */
 
-/* Verified course-video mappings used by the SkillSwap Connect buttons. */
 const courseVideos={
-"React Development":{
-    videoId:"DLX62G4lc44",
-    title:"Learn React JS - Full Course for Beginners",
-    source:"freeCodeCamp.org"
-},
-"Python Programming":{
-    videoId:"rfscVS0vtbw",
-    title:"Learn Python - Full Course for Beginners",
-    source:"freeCodeCamp.org"
-},
-"UI/UX Design":{
-    videoId:"jwCmIBJ8Jtc",
-    title:"Figma Tutorial for UI Design - Course for Beginners",
-    source:"freeCodeCamp.org"
-},
-"Data Analytics":{
-    videoId:"HXV3zeQKqGY",
-    title:"SQL Tutorial - Full Database Course for Beginners",
-    source:"freeCodeCamp.org"
-},
-"Digital Marketing":{
-    videoId:"G6DmDqYLWL8",
-    title:"Digital Marketing Full Course for Beginners",
-    source:"WsCube Tech"
-},
-"Video Editing":{
-    videoId:"CFLGhhNXA6Y",
-    title:"Video Editing Full Course 2026 - Complete Beginner to Pro",
-    source:"Farhat Wani"
-},
-"Java Development":{
-    videoId:"A74TOX803D0",
-    title:"Java Programming for Beginners - Full Course",
-    source:"freeCodeCamp.org"
-},
-"Figma Design":{
-    videoId:"jwCmIBJ8Jtc",
-    title:"Figma Tutorial for UI Design - Course for Beginners",
-    source:"freeCodeCamp.org"
-},
-"Public Speaking":{
-    videoId:"b7id4rzgKIM",
-    title:"Master the Art of Public Speaking with TED Masterclass",
-    source:"TED-Ed"
-}
+"React Development":{videoId:"DLX62G4lc44",title:"Learn React JS - Full Course for Beginners",source:"freeCodeCamp.org"},
+"Python Programming":{videoId:"rfscVS0vtbw",title:"Learn Python - Full Course for Beginners",source:"freeCodeCamp.org"},
+"UI/UX Design":{videoId:"jwCmIBJ8Jtc",title:"Figma Tutorial for UI Design - Course for Beginners",source:"freeCodeCamp.org"},
+"Data Analytics":{videoId:"HXV3zeQKqGY",title:"SQL Tutorial - Full Database Course for Beginners",source:"freeCodeCamp.org"},
+"Digital Marketing":{videoId:"G6DmDqYLWL8",title:"Digital Marketing Full Course for Beginners",source:"WsCube Tech"},
+"Video Editing":{videoId:"CFLGhhNXA6Y",title:"Video Editing Full Course - Complete Beginner to Pro",source:"Farhat Wani"},
+"Java Development":{videoId:"A74TOX803D0",title:"Java Programming for Beginners - Full Course",source:"freeCodeCamp.org"},
+"Figma Design":{videoId:"jwCmIBJ8Jtc",title:"Figma Tutorial for UI Design - Course for Beginners",source:"freeCodeCamp.org"},
+"Public Speaking":{videoId:"b7id4rzgKIM",title:"Master the Art of Public Speaking with TED Masterclass",source:"TED-Ed"}
 };
 
 let currentSkill=null;
@@ -2386,40 +2004,36 @@ let currentYoutubeUrl="";
 
 function requestSkill(name){
     const skill=skills.find(s=>s.name===name);
-    coins+=5;
-    updateCoins();
     openCourse(name,skill);
 }
 
 function openCourse(name,skill){
     currentSkill=skill||skills.find(s=>s.name===name)||{name:name,desc:"Learn this skill step by step."};
     const course=courseVideos[name];
-    const fallbackQuery=name+" full course for beginners";
-    currentYoutubeUrl=course
-        ? "https://www.youtube.com/watch?v="+course.videoId
-        : "https://www.youtube.com/results?search_query="+encodeURIComponent(fallbackQuery);
+    const videoId=course?course.videoId:"";
+    const query=course?course.title:name+" course";
+
+    currentYoutubeUrl=videoId
+        ? "https://www.youtube.com/watch?v="+videoId
+        : "https://www.youtube.com/results?search_query="+encodeURIComponent(name+" course");
 
     document.getElementById("learningTitle").textContent=name+" Course";
     document.getElementById("learningSkillName").textContent=name;
-    document.getElementById("learningInstructor").textContent=course
-        ? course.title+" • "+course.source
-        : (currentSkill.user?"Learning with "+currentSkill.user:"SkillSwap Learning");
+    document.getElementById("learningInstructor").textContent=course&&course.source?course.source:(currentSkill.user?"Learning with "+currentSkill.user:"SkillSwap Learning");
     document.getElementById("learningDescription").textContent=currentSkill.desc||"Learn this skill step by step with a course video.";
-    document.getElementById("fallbackVideoTitle").textContent=course?course.title:fallbackQuery;
+    document.getElementById("fallbackVideoTitle").textContent=course?course.title:name+" Course";
     document.getElementById("watchYoutubeBtn").onclick=()=>window.open(currentYoutubeUrl,"_blank","noopener,noreferrer");
 
     const iframe=document.getElementById("learningVideo");
     const fallback=document.getElementById("localVideoFallback");
 
-    if(location.protocol==="file:"){
-        iframe.style.display="none";
-        fallback.style.display="flex";
-    }else if(course){
-        iframe.style.display="block";
-        fallback.style.display="none";
-        iframe.src="https://www.youtube.com/embed/"+course.videoId+"?rel=0&modestbranding=1&playsinline=1&origin="+encodeURIComponent(location.origin);
+    iframe.style.display="block";
+    fallback.style.display="none";
+
+    if(videoId){
+        iframe.src="https://www.youtube-nocookie.com/embed/"+videoId+"?rel=0&modestbranding=1";
     }else{
-        iframe.style.display="none";
+        iframe.src="about:blank";
         fallback.style.display="flex";
     }
 
@@ -2476,16 +2090,6 @@ async function askGeminiPage(){
         if(!res.ok)throw new Error(data.error?.message||"Gemini request failed");
         answer.textContent=data.candidates?.[0]?.content?.parts?.map(p=>p.text||"").join("\n")||"Gemini returned no answer.";
     }catch(err){answer.textContent="Gemini error: "+err.message;}
-}
-
-
-function updateCoins(){
-
-document.getElementById("coinStat").textContent=coins;
-
-document.getElementById("sideCoins").textContent=
-coins+" 🪙";
-
 }
 
 
@@ -2550,73 +2154,6 @@ skill+" was published to SkillSwap"
 document.getElementById("offerSkill").value="";
 
 document.getElementById("offerDesc").value="";
-
-}
-
-
-/* CHAT */
-
-function sendMessage(){
-
-const input=
-document.getElementById("chatInput");
-
-const text=input.value.trim();
-
-if(!text)return;
-
-const messages=
-document.getElementById("messages");
-
-messages.insertAdjacentHTML(
-"beforeend",
-`<div class="msg me">${escapeHtml(text)}</div>`
-);
-
-input.value="";
-
-setTimeout(()=>{
-
-messages.insertAdjacentHTML(
-"beforeend",
-`<div class="msg">
-Sounds good! Let's discuss it in our next session. 😊
-</div>`
-);
-
-},700);
-
-}
-
-
-function escapeHtml(s){
-
-return s.replace(
-/[&<>"']/g,
-
-c=>({
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[c])
-
-);
-
-}
-
-
-function selectChat(name){
-
-document.getElementById("chatName")
-.textContent=name;
-
-showToast(
-"Chat opened with "+name
-);
 
 }
 
@@ -2721,14 +2258,47 @@ closeModal();
 });
 
 
+function showCreateAccount(){
+document.getElementById("loginCard").style.display="none";
+document.getElementById("createAccountCard").style.display="block";
+}
+
+function showLogin(){
+document.getElementById("createAccountCard").style.display="none";
+document.getElementById("loginCard").style.display="block";
+}
+
+function createAccount(){
+const name=document.getElementById("createName").value.trim();
+const email=document.getElementById("createEmail").value.trim();
+const password=document.getElementById("createPassword").value;
+const confirmPassword=document.getElementById("createConfirmPassword").value;
+if(!name || !email || !password || !confirmPassword){showToast("Please fill all account fields");return;}
+if(password!==confirmPassword){showToast("Passwords do not match");return;}
+if(password.length<6){showToast("Password must be at least 6 characters");return;}
+const account={name,email,password};
+localStorage.setItem("skillSwapAccount",JSON.stringify(account));
+localStorage.setItem("skillSwapStudent",JSON.stringify({name,email}));
+document.getElementById("loginEmail").value=email;
+document.getElementById("loginPassword").value="";
+document.getElementById("createName").value="";
+document.getElementById("createEmail").value="";
+document.getElementById("createPassword").value="";
+document.getElementById("createConfirmPassword").value="";
+showLogin();
+showToast("Account created. Please login");
+}
+
 function login(){
 const email=document.getElementById("loginEmail").value.trim();
 const password=document.getElementById("loginPassword").value;
 if(!email || !password){showToast("Please enter email and password");return;}
+const account=JSON.parse(localStorage.getItem("skillSwapAccount")||"null");
+if(account && (email!==account.email || password!==account.password)){showToast("Incorrect email or password");return;}
 localStorage.setItem("skillSwapLoggedIn","true");
 const saved=JSON.parse(localStorage.getItem("skillSwapStudent")||"null")||{};
 saved.email=email;
-saved.name=saved.name||"Alex Student";
+saved.name=account?.name||saved.name||"Alex Student";
 localStorage.setItem("skillSwapStudent",JSON.stringify(saved));
 document.getElementById("loginScreen").style.display="none";
 document.getElementById("mainApp").style.display="flex";
@@ -2801,7 +2371,6 @@ renderSkills();
 
 renderPopular();
 
-renderMatches();
 
 renderSessions();
 
